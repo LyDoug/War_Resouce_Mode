@@ -5,6 +5,7 @@
 [Bb]uilds/
 [Ll]ogs/
 UserSettings/
+.vs/
 
 MemoryCaptures/
 Recordings/
@@ -20,6 +21,7 @@ Recordings/
 *.booproj
 *.svd
 *.pdb
+*.vsconfig
 
 .DS_Store
 Thumbs.db
