@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: 7dda666922df729409a8d25eeb02648a
+MonoImporter:
+  externalObjects: {}
+  serializedVersion: 2
+  defaultReferences:
+  - blueprint: {fileID: 11400000, guid: 8dc2be97b86918648be777f38f6c047f, type: 2}
+  - rb: {instanceID: 0}
+  - movement: {instanceID: 0}
+  - gun: {instanceID: 0}
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

@@ -1,0 +1,26 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6c816486a208beb4589d579fb5369d72, type: 3}
+  m_Name: Bomber
+  m_EditorClassIdentifier: Assembly-CSharp::VehicleBlueprint
+  vehicleName: Bomber
+  prefab: {fileID: 3280384310271628014, guid: bf253b5303cd99947a908d82dbd52708, type: 3}
+  moveForce: 120000
+  turnTorque: 35000
+  maxSpeed: 12
+  mass: 8000
+  fireRate: 0
+  shellSpeed: 0
+  shellDamage: 0
+  recoilDistance: 0
+  cameraDistance: 15
+  cameraFOV: 80

@@ -1,0 +1,13 @@
+fileFormatVersion: 2
+guid: e7c9c93fbb4d0a94c9ed8ca218b7df98
+MonoImporter:
+  externalObjects: {}
+  serializedVersion: 2
+  defaultReferences:
+  - defaultBlueprint: {fileID: 11400000, guid: 8dc2be97b86918648be777f38f6c047f, type: 2}
+  - spawnPoint: {instanceID: 0}
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

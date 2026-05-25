@@ -1,0 +1,29 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6c816486a208beb4589d579fb5369d72, type: 3}
+  m_Name: Truck
+  m_EditorClassIdentifier: Assembly-CSharp::VehicleBlueprint
+  vehicleName: Truck
+  prefab: {fileID: 2050600961306366073, guid: 7e5abbbed62a99b4bb8ec381be3ca1c3, type: 3}
+  cost: 0
+  role: 1
+  moveForce: 100
+  turnTorque: 350
+  maxSpeed: 40
+  mass: 500
+  fireRate: 0
+  shellSpeed: 0
+  shellDamage: 0
+  recoilDistance: 0
+  cameraDistance: 6
+  cameraFOV: 60
+  costs: []

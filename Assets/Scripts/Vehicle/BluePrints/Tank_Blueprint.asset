@@ -1,0 +1,33 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6c816486a208beb4589d579fb5369d72, type: 3}
+  m_Name: Tank_Blueprint
+  m_EditorClassIdentifier: Assembly-CSharp::VehicleBlueprint
+  vehicleName: Tank
+  prefab: {fileID: 6606282558385792549, guid: 4fa568db59e79ed4092b1378efa66fe3, type: 3}
+  cost: 0
+  role: 2
+  moveForce: 120000
+  turnTorque: 35000
+  maxSpeed: 20
+  mass: 30000
+  fireRate: 1
+  shellSpeed: 120
+  shellDamage: 25
+  recoilDistance: 0.3
+  cameraDistance: 6
+  cameraFOV: 60
+  costs:
+  - resource: 1
+    amount: 1
+  - resource: 2
+    amount: 1
