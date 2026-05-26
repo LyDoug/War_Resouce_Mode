@@ -25,7 +25,9 @@ public class BaseDestructibleWithHealthVisual : MonoBehaviour
 
     public Color lowHealthColor = Color.red;
 
-    private CaptureTriggerAdvanced capture;
+    CaptureTriggerAdvanced capture;
+
+    Rigidbody[] rigidbodies;
 
     // =========================================================
     // START
@@ -34,11 +36,15 @@ public class BaseDestructibleWithHealthVisual : MonoBehaviour
     {
         currentHealth = maxHealth;
 
-        // CaptureTrigger
+        // CAPTURE
         capture =
-            GetComponentInChildren<CaptureTriggerAdvanced>();
+            GetComponentInChildren<CaptureTriggerAdvanced>(true);
 
-        // Auto renderer
+        // RIGIDBODIES
+        rigidbodies =
+            GetComponentsInChildren<Rigidbody>(true);
+
+        // AUTO RENDERER
         if (baseRenderer == null)
         {
             baseRenderer =
@@ -66,7 +72,11 @@ public class BaseDestructibleWithHealthVisual : MonoBehaviour
         currentHealth -= damage;
 
         currentHealth =
-            Mathf.Clamp(currentHealth, 0f, maxHealth);
+            Mathf.Clamp(
+                currentHealth,
+                0f,
+                maxHealth
+            );
 
         UpdateColor();
 
@@ -101,8 +111,12 @@ public class BaseDestructibleWithHealthVisual : MonoBehaviour
                 t
             );
 
-        // HDRP/URP
-        if (baseRenderer.material.HasProperty("_BaseColor"))
+        // URP/HDRP
+        if (
+            baseRenderer.material.HasProperty(
+                "_BaseColor"
+            )
+        )
         {
             baseRenderer.material.SetColor(
                 "_BaseColor",
@@ -120,90 +134,70 @@ public class BaseDestructibleWithHealthVisual : MonoBehaviour
     // DESTROY
     // =========================================================
     void DestroyBase()
-{
-    if (destroyed)
-        return;
-
-    destroyed = true;
-
-    Debug.Log("💥 Base destruída!");
-
-    // =====================================
-    // DESLIGA RENDERERS
-    // =====================================
-    Renderer[] rends =
-        GetComponentsInChildren<Renderer>();
-
-    foreach (Renderer r in rends)
     {
-        r.enabled = false;
+        if (destroyed)
+            return;
+
+        destroyed = true;
+
+        Debug.Log("💥 Base destruída!");
+
+        // =====================================
+        // DESLIGA RENDERERS
+        // =====================================
+        Renderer[] rends =
+            GetComponentsInChildren<Renderer>(true);
+
+        foreach (Renderer r in rends)
+        {
+            r.enabled = false;
+        }
+
+        // =====================================
+        // DESLIGA COLLIDERS
+        // =====================================
+        Collider[] cols =
+            GetComponentsInChildren<Collider>(true);
+
+        foreach (Collider c in cols)
+        {
+            c.enabled = false;
+        }
+
+        // =====================================
+        // DESLIGA CAPTURE
+        // =====================================
+        if (capture != null)
+        {
+            capture.enabled = false;
+        }
+
+        // =====================================
+        // DESLIGA RIGIDBODIES
+        // =====================================
+        foreach (Rigidbody rb in rigidbodies)
+        {
+            rb.linearVelocity = Vector3.zero;
+            rb.angularVelocity = Vector3.zero;
+
+            rb.isKinematic = true;
+        }
+
+        // =====================================
+        // RESPAWN
+        // =====================================
+        Invoke(
+            nameof(RespawnBase),
+            respawnDelay
+        );
     }
-
-    // =====================================
-    // DESLIGA COLLIDERS
-    // =====================================
-    Collider[] cols =
-        GetComponentsInChildren<Collider>();
-
-    foreach (Collider c in cols)
-    {
-        c.enabled = false;
-    }
-
-    // =====================================
-    // DESLIGA CAPTURE
-    // =====================================
-    if (capture != null)
-    {
-        capture.gameObject.SetActive(false);
-    }
-
-    // =====================================
-    // RESPAWN
-    // =====================================
-    Invoke(
-        nameof(RespawnBase),
-        respawnDelay
-    );
-}
 
     // =========================================================
     // RESPAWN
     // =========================================================
     void RespawnBase()
     {
-        // =====================================
-        // REATIVA OBJETO
-        // =====================================
-        // =====================================
-// REATIVA RENDERERS
-// =====================================
-Renderer[] rends =
-    GetComponentsInChildren<Renderer>();
-
-foreach (Renderer r in rends)
-{
-    r.enabled = true;
-}
-
-// =====================================
-// REATIVA COLLIDERS
-// =====================================
-Collider[] cols =
-    GetComponentsInChildren<Collider>();
-
-foreach (Collider c in cols)
-{
-    c.enabled = true;
-}
-
-// =====================================
-// REATIVA CAPTURE
-// =====================================
-if (capture != null)
-{
-    capture.gameObject.SetActive(true);
-}
+        Debug.Log("🔄 Respawnando base...");
 
         // =====================================
         // POSIÇÃO NOVA
@@ -242,10 +236,45 @@ if (capture != null)
         destroyed = false;
 
         // =====================================
+        // REATIVA RENDERERS
+        // =====================================
+        Renderer[] rends =
+            GetComponentsInChildren<Renderer>(true);
+
+        foreach (Renderer r in rends)
+        {
+            r.enabled = true;
+        }
+
+        // =====================================
+        // REATIVA COLLIDERS
+        // =====================================
+        Collider[] cols =
+            GetComponentsInChildren<Collider>(true);
+
+        foreach (Collider c in cols)
+        {
+            c.enabled = true;
+        }
+
+        // =====================================
+        // REATIVA RIGIDBODIES
+        // =====================================
+        foreach (Rigidbody rb in rigidbodies)
+        {
+            rb.isKinematic = false;
+
+            rb.linearVelocity = Vector3.zero;
+            rb.angularVelocity = Vector3.zero;
+        }
+
+        // =====================================
         // RESET CAPTURE
         // =====================================
         if (capture != null)
         {
+            capture.enabled = true;
+
             capture.ResetCapture();
 
             Debug.Log(
@@ -264,7 +293,7 @@ if (capture != null)
         // =====================================
         UpdateColor();
 
-        Debug.Log("🔄 Base reapareceu");
+        Debug.Log("🏗️ Base reapareceu");
     }
 
     // =========================================================
@@ -296,3 +325,4 @@ if (capture != null)
         return destroyed;
     }
 }
+

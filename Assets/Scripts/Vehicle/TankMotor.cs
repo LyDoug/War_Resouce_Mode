@@ -6,26 +6,21 @@ public class TankMotor : MonoBehaviour
     [Header("Blueprint")]
     public VehicleBlueprint blueprint;
 
-    [Header("Tracks")]
-    public Transform leftTrack;
-    public Transform rightTrack;
-
     [Header("Physics")]
     public Transform centerOfMass;
 
-    [Header("Tank Settings")]
-    public float turnWhileStoppedMultiplier = 0.7f;
-
-    [Range(0.7f, 1f)]
-    public float sideGrip = 0.92f;
-
-    public float downforce = 30f;
+    [Header("Grip")]
+    [Range(0f, 1f)]
+    public float sideGrip = 0.85f;
 
     Rigidbody rb;
 
     float moveForce;
-    float turnForce;
+    float turnSpeed;
     float maxSpeed;
+
+    float moveInput;
+    float turnInput;
 
     // =====================================================
     // AWAKE
@@ -34,21 +29,47 @@ public class TankMotor : MonoBehaviour
     {
         rb = GetComponent<Rigidbody>();
 
-        SetupPhysics();
+        ApplyPhysics();
 
         ApplyBlueprint();
     }
 
     // =====================================================
-    // SETUP PHYSICS
+    // UPDATE
     // =====================================================
-    void SetupPhysics()
+    void Update()
     {
-        rb.mass = 1000f;
+        moveInput =
+            Input.GetAxis("Vertical");
+
+        turnInput =
+            Input.GetAxis("Horizontal");
+    }
+
+    // =====================================================
+    // FIXED UPDATE
+    // =====================================================
+    void FixedUpdate()
+    {
+        Move();
+
+        Turn();
+
+        ApplyGrip();
+
+        LimitSpeed();
+    }
+
+    // =====================================================
+    // APPLY PHYSICS
+    // =====================================================
+    void ApplyPhysics()
+    {
+        rb.mass = 5000f;
 
         rb.linearDamping = 1f;
 
-        rb.angularDamping = 5f;
+        rb.angularDamping = 8f;
 
         rb.interpolation =
             RigidbodyInterpolation.Interpolate;
@@ -60,12 +81,6 @@ public class TankMotor : MonoBehaviour
             RigidbodyConstraints.FreezeRotationX |
             RigidbodyConstraints.FreezeRotationZ;
 
-        // IMPORTANTE
-        rb.maxAngularVelocity = 4f;
-
-        // =========================
-        // CENTER OF MASS
-        // =========================
         if (centerOfMass != null)
         {
             rb.centerOfMass =
@@ -82,14 +97,9 @@ public class TankMotor : MonoBehaviour
     {
         if (blueprint == null)
         {
-            Debug.LogWarning(
-                "⚠️ VehicleBlueprint não atribuído!"
-            );
-
-            // FALLBACK
-            moveForce = 20f;
-            turnForce = 6f;
-            maxSpeed = 8f;
+            moveForce = 35f;
+            turnSpeed = 45f;
+            maxSpeed = 12f;
 
             return;
         }
@@ -97,7 +107,7 @@ public class TankMotor : MonoBehaviour
         moveForce =
             blueprint.moveForce;
 
-        turnForce =
+        turnSpeed =
             blueprint.turnTorque;
 
         maxSpeed =
@@ -108,118 +118,62 @@ public class TankMotor : MonoBehaviour
     }
 
     // =====================================================
-    // FIXED UPDATE
-    // =====================================================
-    void FixedUpdate()
-    {
-        MoveTank();
-
-        TurnTank();
-
-        ApplySideGrip();
-
-        ApplyDownforce();
-
-        LimitSpeed();
-    }
-
-    // =====================================================
     // MOVE
     // =====================================================
-    void MoveTank()
+    void Move()
     {
-        float moveInput =
-            Input.GetAxis("Vertical");
-
         if (Mathf.Abs(moveInput) < 0.01f)
             return;
 
-        Vector3 moveForceVector =
+        rb.AddForce(
             transform.forward *
             moveInput *
-            moveForce;
-
-        // LEFT TRACK
-        if (leftTrack != null)
-        {
-            rb.AddForceAtPosition(
-                moveForceVector,
-                leftTrack.position,
-                ForceMode.Acceleration
-            );
-        }
-
-        // RIGHT TRACK
-        if (rightTrack != null)
-        {
-            rb.AddForceAtPosition(
-                moveForceVector,
-                rightTrack.position,
-                ForceMode.Acceleration
-            );
-        }
-    }
-
-    // =====================================================
-    // TURN
-    // =====================================================
-    void TurnTank()
-    {
-        float moveInput =
-            Input.GetAxis("Vertical");
-
-        float turnInput =
-            Input.GetAxis("Horizontal");
-
-        if (Mathf.Abs(turnInput) < 0.01f)
-            return;
-
-        float multiplier = 1f;
-
-        // GIRO PARADO
-        if (Mathf.Abs(moveInput) < 0.05f)
-        {
-            multiplier =
-                turnWhileStoppedMultiplier;
-        }
-
-        rb.AddTorque(
-            Vector3.up *
-            turnInput *
-            turnForce *
-            multiplier,
+            moveForce,
             ForceMode.Acceleration
         );
     }
 
     // =====================================================
-    // SIDE GRIP
+    // TURN
     // =====================================================
-    void ApplySideGrip()
+    void Turn()
+    {
+        if (Mathf.Abs(turnInput) < 0.01f)
+            return;
+
+        float turnAmount =
+            turnInput *
+            turnSpeed *
+            Time.fixedDeltaTime;
+
+        Quaternion turnRotation =
+            Quaternion.Euler(
+                0f,
+                turnAmount,
+                0f
+            );
+
+        rb.MoveRotation(
+            rb.rotation * turnRotation
+        );
+    }
+
+    // =====================================================
+    // GRIP
+    // =====================================================
+    void ApplyGrip()
     {
         Vector3 localVelocity =
             transform.InverseTransformDirection(
                 rb.linearVelocity
             );
 
-        // REMOVE DRIFT LATERAL
         localVelocity.x *= sideGrip;
 
         rb.linearVelocity =
             transform.TransformDirection(
                 localVelocity
             );
-    }
-
-    // =====================================================
-    // DOWNFORCE
-    // =====================================================
-    void ApplyDownforce()
-    {
-        rb.AddForce(
-            Vector3.down * downforce,
-            ForceMode.Acceleration
-        );
     }
 
     // =====================================================
@@ -234,10 +188,7 @@ public class TankMotor : MonoBehaviour
                 rb.linearVelocity.z
             );
 
-        if (
-            flatVelocity.magnitude >
-            maxSpeed
-        )
+        if (flatVelocity.magnitude > maxSpeed)
         {
             Vector3 limited =
                 flatVelocity.normalized *

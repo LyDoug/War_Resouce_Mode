@@ -17,9 +17,9 @@ MonoBehaviour:
   cost: 0
   role: 2
   moveForce: 30
-  turnTorque: 10
-  maxSpeed: 12
-  mass: 6500
+  turnTorque: 50
+  maxSpeed: 10
+  mass: 7000
   fireRate: 1
   shellSpeed: 120
   shellDamage: 25
