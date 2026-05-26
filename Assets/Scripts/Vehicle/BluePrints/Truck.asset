@@ -16,10 +16,10 @@ MonoBehaviour:
   prefab: {fileID: 2050600961306366073, guid: 7e5abbbed62a99b4bb8ec381be3ca1c3, type: 3}
   cost: 0
   role: 1
-  moveForce: 100
-  turnTorque: 350
-  maxSpeed: 40
-  mass: 500
+  moveForce: 75
+  turnTorque: 55
+  maxSpeed: 35
+  mass: 3000
   fireRate: 0
   shellSpeed: 0
   shellDamage: 0

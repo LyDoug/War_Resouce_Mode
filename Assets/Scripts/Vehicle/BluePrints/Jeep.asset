@@ -13,13 +13,13 @@ MonoBehaviour:
   m_Name: Jeep
   m_EditorClassIdentifier: Assembly-CSharp::VehicleBlueprint
   vehicleName: Jeep
-  prefab: {fileID: 3015657605064570815, guid: f9ad0bea2477d4046beda72a5e8fe9c4, type: 3}
+  prefab: {fileID: 1276828001981211393, guid: 89e8c801ea9ea704787174b0e8f95f90, type: 3}
   cost: 0
   role: 0
-  moveForce: 0
-  turnTorque: 0
-  maxSpeed: 0
-  mass: 0
+  moveForce: 85
+  turnTorque: 90
+  maxSpeed: 50
+  mass: 1200
   fireRate: 0
   shellSpeed: 0
   shellDamage: 0
