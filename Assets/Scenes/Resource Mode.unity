@@ -5239,7 +5239,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8b87dfc418110224f830751d6964019e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::BaseDestructibleWithHealthVisual
-  spawner: {fileID: 0}
+  spawner: {fileID: 1193642181}
   maxHealth: 200
   currentHealth: 200
   respawnPoints:

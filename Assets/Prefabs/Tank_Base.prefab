@@ -123,7 +123,6 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 6957487846924404048}
-  - {fileID: 5629621464569589705}
   m_Father: {fileID: 8567614817615394923}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!33 &8022289473399087134
@@ -300,7 +299,7 @@ GameObject:
   - component: {fileID: 5629621464569589705}
   m_Layer: 3
   m_Name: GunView
-  m_TagString: Untagged
+  m_TagString: CameraPivot
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -313,12 +312,12 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2521951472133973815}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.04, y: 2.13, z: 0.06}
+  m_LocalRotation: {x: -0.00000003774895, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: -0.29999974, y: 5.16, z: -0.4100002}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 7643408306018212029}
+  m_Father: {fileID: 8567614817615394923}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &2595963585134024115
 GameObject:
@@ -699,6 +698,7 @@ Transform:
   - {fileID: 2976465054341395180}
   - {fileID: 2513168980492382393}
   - {fileID: 4074396722215049003}
+  - {fileID: 5629621464569589705}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &5755379823584264684

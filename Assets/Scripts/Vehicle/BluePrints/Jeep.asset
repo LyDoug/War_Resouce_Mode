@@ -18,8 +18,8 @@ MonoBehaviour:
   role: 0
   moveForce: 85
   turnTorque: 90
-  maxSpeed: 50
-  mass: 1200
+  maxSpeed: 30
+  mass: 1500
   fireRate: 0
   shellSpeed: 0
   shellDamage: 0
