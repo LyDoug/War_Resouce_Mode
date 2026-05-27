@@ -9,6 +9,9 @@ public class VehicleMotor : MonoBehaviour
     [Header("Center Of Mass")]
     public Transform centerOfMass;
 
+    [Header("Input")]
+    public bool usePlayerInput = true;
+
     Rigidbody rb;
 
     float moveInput;
@@ -32,6 +35,7 @@ public class VehicleMotor : MonoBehaviour
         }
 
         rb.linearDamping = 0.3f;
+
         rb.angularDamping = 4f;
 
         rb.interpolation =
@@ -64,11 +68,32 @@ public class VehicleMotor : MonoBehaviour
     // =====================================================
     void Update()
     {
+        // =====================================
+        // PLAYER INPUT
+        // =====================================
+        if (usePlayerInput)
+        {
+            moveInput =
+                Input.GetAxis("Vertical");
+
+            turnInput =
+                Input.GetAxis("Horizontal");
+        }
+    }
+
+    // =====================================================
+    // AI INPUT
+    // =====================================================
+    public void SetAIInput(
+        float move,
+        float turn
+    )
+    {
         moveInput =
-            Input.GetAxis("Vertical");
+            Mathf.Clamp(move, -1f, 1f);
 
         turnInput =
-            Input.GetAxis("Horizontal");
+            Mathf.Clamp(turn, -1f, 1f);
     }
 
     // =====================================================
