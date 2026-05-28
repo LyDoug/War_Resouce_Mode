@@ -2484,7 +2484,7 @@ MonoBehaviour:
   shellPrefab: {fileID: 3333418677161026175, guid: 73fcdd9a421278346868c829cbe49e67, type: 3}
   firePoint: {fileID: 431935218669293898}
   muzzleFlashVFX: {fileID: 100004, guid: fd4a45d1b6004d444a831d09319a8712, type: 3}
-  smokeVFX: {fileID: 100008, guid: 06736895ea0a4ff408d25e6684dce797, type: 3}
+  smokeVFX: {fileID: 100006, guid: 44e3d1df6a484904380297785a915147, type: 3}
   launchForce: 40
   arcForce: 25
   reloadTime: 2
