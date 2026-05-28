@@ -1,0 +1,31 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6c816486a208beb4589d579fb5369d72, type: 3}
+  m_Name: Artillery
+  m_EditorClassIdentifier: Assembly-CSharp::VehicleBlueprint
+  vehicleName: Artillery
+  prefab: {fileID: 162968, guid: f3ef21574de0947bb85e013b10ee9552, type: 3}
+  cost: 0
+  role: 3
+  moveForce: 35
+  turnTorque: 20
+  maxSpeed: 8
+  mass: 7000
+  fireRate: 3
+  shellSpeed: 70
+  shellDamage: 100
+  recoilDistance: 0.7
+  cameraDistance: 6
+  cameraFOV: 60
+  costs:
+  - resource: 1
+    amount: 1

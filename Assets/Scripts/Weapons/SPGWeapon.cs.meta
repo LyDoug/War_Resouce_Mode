@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: 9de6a5c74c8353e47b71a20570bc0d40
+MonoImporter:
+  externalObjects: {}
+  serializedVersion: 2
+  defaultReferences:
+  - shellPrefab: {fileID: 3333418677161026175, guid: 73fcdd9a421278346868c829cbe49e67, type: 3}
+  - firePoint: {instanceID: 0}
+  - muzzleFlashVFX: {fileID: 100004, guid: fd4a45d1b6004d444a831d09319a8712, type: 3}
+  - smokeVFX: {fileID: 100006, guid: 44e3d1df6a484904380297785a915147, type: 3}
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

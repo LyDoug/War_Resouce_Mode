@@ -95,6 +95,12 @@ public class VehicleSpawnerFinal : MonoBehaviour
             Debug.Log("🛡️ Spawn Tank");
             TrySpawn(VehicleRole.Tank);
         }
+
+        if (Input.GetKeyDown(KeyCode.V))
+        {
+            Debug.Log("🚀 Spawn Artillery");
+        TrySpawn(VehicleRole.Artillery);
+        }
     }
 
     // =========================================================

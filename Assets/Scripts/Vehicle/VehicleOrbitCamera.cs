@@ -4,7 +4,9 @@ public class VehicleOrbitCamera : MonoBehaviour
 {
     [Header("Targets")]
     public Transform target;
+
     public Transform driverView;
+
     public Transform gunView;
 
     [Header("Camera")]
@@ -12,60 +14,112 @@ public class VehicleOrbitCamera : MonoBehaviour
 
     [Header("Mouse")]
     public float sensitivity = 3f;
+
     public float minPitch = -10f;
+
     public float maxPitch = 60f;
 
     [Header("Zoom")]
     public float zoomSpeed = 5f;
+
     public float minDistance = 0f;
+
     public float maxDistance = 10f;
 
     [Header("Follow")]
     public float followSmooth = 12f;
+
     public float rotationSmooth = 10f;
 
     [Header("Auto Align")]
     public bool autoAlign = true;
+
     public float alignSpeed = 3f;
 
     [Header("Height")]
     public float thirdPersonHeight = 2f;
 
+    [Header("Modes")]
+    public bool gunMode = false;
+
     float yaw;
     float pitch;
     float distance = 5f;
 
+    // =====================================================
+    // START
+    // =====================================================
     void Start()
     {
         if (cameraTransform == null)
-            cameraTransform = GetComponentInChildren<Camera>().transform;
+        {
+            Camera cam =
+                GetComponentInChildren<Camera>();
+
+            if (cam != null)
+            {
+                cameraTransform = cam.transform;
+            }
+        }
 
         yaw = transform.eulerAngles.y;
         pitch = 15f;
     }
 
+    // =====================================================
+    // UPDATE
+    // =====================================================
+    void Update()
+    {
+        // =====================================
+        // GUN VIEW
+        // =====================================
+        if (Input.GetKeyDown(KeyCode.E))
+        {
+            gunMode = !gunMode;
+
+            Debug.Log(
+                gunMode
+                ? "🎯 GunView ON"
+                : "🚗 GunView OFF"
+            );
+        }
+    }
+
+    // =====================================================
+    // LATE UPDATE
+    // =====================================================
     void LateUpdate()
     {
-        if (!target) return;
+        if (!target)
+            return;
 
-        // ================= INPUT =================
-        float mouseX = Input.GetAxis("Mouse X");
-        float mouseY = Input.GetAxis("Mouse Y");
+        // =====================================
+        // INPUT
+        // =====================================
+        float mouseX =
+            Input.GetAxis("Mouse X");
+
+        float mouseY =
+            Input.GetAxis("Mouse Y");
 
         yaw += mouseX * sensitivity;
+
         pitch -= mouseY * sensitivity;
 
-        // ================= AUTO ALIGN =================
-        if (autoAlign)
+        // =====================================
+        // AUTO ALIGN
+        // =====================================
+        if (autoAlign && !gunMode)
         {
             bool movingMouse =
                 Mathf.Abs(mouseX) > 0.01f ||
                 Mathf.Abs(mouseY) > 0.01f;
 
-            // 🔥 recentraliza se não estiver movendo mouse
             if (!movingMouse)
             {
-                float targetYaw = target.eulerAngles.y;
+                float targetYaw =
+                    target.eulerAngles.y;
 
                 yaw = Mathf.LerpAngle(
                     yaw,
@@ -75,27 +129,50 @@ public class VehicleOrbitCamera : MonoBehaviour
             }
         }
 
-        // ================= LIMITA PITCH =================
-        pitch = Mathf.Clamp(pitch, minPitch, maxPitch);
+        // =====================================
+        // LIMITA PITCH
+        // =====================================
+        pitch = Mathf.Clamp(
+            pitch,
+            minPitch,
+            maxPitch
+        );
 
-        // ================= ZOOM =================
-        float scroll = Input.GetAxis("Mouse ScrollWheel");
+        // =====================================
+        // ZOOM
+        // =====================================
+        float scroll =
+            Input.GetAxis("Mouse ScrollWheel");
 
         if (Mathf.Abs(scroll) > 0.01f)
         {
             distance -= scroll * zoomSpeed;
-            distance = Mathf.Clamp(distance, minDistance, maxDistance);
+
+            distance = Mathf.Clamp(
+                distance,
+                minDistance,
+                maxDistance
+            );
         }
 
-        // ================= FOLLOW VEÍCULO =================
+        // =====================================
+        // FOLLOW
+        // =====================================
         transform.position = Vector3.Lerp(
             transform.position,
             target.position,
             Time.deltaTime * followSmooth
         );
 
-        // ================= ROTAÇÃO =================
-        Quaternion rotation = Quaternion.Euler(pitch, yaw, 0f);
+        // =====================================
+        // ROTATION
+        // =====================================
+        Quaternion rotation =
+            Quaternion.Euler(
+                pitch,
+                yaw,
+                0f
+            );
 
         transform.rotation = Quaternion.Lerp(
             transform.rotation,
@@ -103,58 +180,103 @@ public class VehicleOrbitCamera : MonoBehaviour
             Time.deltaTime * rotationSmooth
         );
 
-        // ================= MODO MIRA =================
-        if (distance <= 0.2f)
+        // =====================================
+        // GUN VIEW MODE
+        // =====================================
+        if (gunMode && gunView != null)
         {
-            if (gunView != null)
-            {
-                cameraTransform.position = Vector3.Lerp(
+            cameraTransform.position =
+                Vector3.Lerp(
                     cameraTransform.position,
                     gunView.position,
                     Time.deltaTime * 15f
                 );
 
-                cameraTransform.rotation = Quaternion.Lerp(
+            cameraTransform.rotation =
+                Quaternion.Lerp(
                     cameraTransform.rotation,
                     gunView.rotation,
                     Time.deltaTime * 15f
                 );
-            }
 
             return;
         }
 
-        // ================= TERCEIRA PESSOA =================
+        // =====================================
+        // DRIVER VIEW
+        // =====================================
+        if (
+            distance <= 0.2f &&
+            driverView != null
+        )
+        {
+            cameraTransform.position =
+                Vector3.Lerp(
+                    cameraTransform.position,
+                    driverView.position,
+                    Time.deltaTime * 15f
+                );
+
+            cameraTransform.rotation =
+                Quaternion.Lerp(
+                    cameraTransform.rotation,
+                    driverView.rotation,
+                    Time.deltaTime * 15f
+                );
+
+            return;
+        }
+
+        // =====================================
+        // THIRD PERSON
+        // =====================================
         Vector3 offset =
-            rotation * new Vector3(0f, thirdPersonHeight, -distance);
+            rotation *
+            new Vector3(
+                0f,
+                thirdPersonHeight,
+                -distance
+            );
 
-        Vector3 desiredPosition = target.position + offset;
+        Vector3 desiredPosition =
+            target.position + offset;
 
-        cameraTransform.position = Vector3.Lerp(
-            cameraTransform.position,
-            desiredPosition,
-            Time.deltaTime * followSmooth
-        );
+        cameraTransform.position =
+            Vector3.Lerp(
+                cameraTransform.position,
+                desiredPosition,
+                Time.deltaTime * followSmooth
+            );
 
-        // 🔥 câmera SEMPRE olha para frente
-        cameraTransform.rotation = Quaternion.Lerp(
-            cameraTransform.rotation,
-            rotation,
-            Time.deltaTime * rotationSmooth
-        );
+        cameraTransform.rotation =
+            Quaternion.Lerp(
+                cameraTransform.rotation,
+                rotation,
+                Time.deltaTime * rotationSmooth
+            );
     }
 
-    // ================= CONFIG EXTERNA =================
+    // =====================================================
+    // CONFIG EXTERNA
+    // =====================================================
     public void SetDefaultDistance(float d)
     {
-        distance = Mathf.Clamp(d, minDistance, maxDistance);
+        distance =
+            Mathf.Clamp(
+                d,
+                minDistance,
+                maxDistance
+            );
     }
 
     public void SetFOV(float fov)
     {
-        Camera cam = cameraTransform.GetComponent<Camera>();
+        Camera cam =
+            cameraTransform.GetComponent<Camera>();
 
         if (cam != null)
+        {
             cam.fieldOfView = fov;
+        }
     }
 }
