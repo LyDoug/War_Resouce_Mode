@@ -313,7 +313,7 @@ Transform:
   m_GameObject: {fileID: 2521951472133973815}
   serializedVersion: 2
   m_LocalRotation: {x: -0.00000003774895, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -0.29999974, y: 5.16, z: -0.4100002}
+  m_LocalPosition: {x: -0.29999974, y: 4.767, z: 1.179}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -549,6 +549,7 @@ Transform:
   m_Children:
   - {fileID: 7979607098523331940}
   - {fileID: 3167360357236175201}
+  - {fileID: 1657428718835787958}
   m_Father: {fileID: 7643408306018212029}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!33 &1677347749752832762
@@ -623,6 +624,7 @@ MonoBehaviour:
   aimSpeed: 200
   minAngle: -45
   maxAngle: 5
+  smoothSpeed: 8
   deadZone: 0.01
 --- !u!1 &5909328660895188759
 GameObject:
@@ -810,3 +812,56 @@ MonoBehaviour:
   blueprint: {fileID: 11400000, guid: 8dc2be97b86918648be777f38f6c047f, type: 2}
   centerOfMass: {fileID: 8855831257960291412}
   sideGrip: 0.9
+--- !u!1 &7592419372546348898
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1657428718835787958}
+  - component: {fileID: 7992773239019438609}
+  m_Layer: 3
+  m_Name: FirePointSec
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1657428718835787958
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7592419372546348898}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: -0.341, y: -0.054, z: 2.072}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 6957487846924404048}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &7992773239019438609
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7592419372546348898}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 58d34c7ac12014e4da6c685567d1f076, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::TankGun
+  firePoint: {fileID: 1657428718835787958}
+  shellPrefab: {fileID: 5272909772119827852, guid: 910b76ae43e2104439c5ed6b73b7912d, type: 3}
+  fireRate: 1.5
+  shellSpeed: 120
+  recoilDistance: 0.7
+  currentShellDamage: 100
+  recoilReturnSpeed: 10
+  muzzleFlashPrefab: {fileID: 100004, guid: fd4a45d1b6004d444a831d09319a8712, type: 3}
+  muzzleFlashDuration: 1.5
